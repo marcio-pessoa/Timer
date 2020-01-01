@@ -1,23 +1,25 @@
 /* Timer.cpp - Real Time Library
- * 
+ *
+ * Copyright 2019-2020 Marcio Pessoa
+ *
  */
 
 #include "Arduino.h"
 #include "Timer.h"
 
 /* Timer
- * 
+ *
  * Description
  *   Timers used to build real time applications.
- * 
+ *
  *   Timer (int period, int type)
- * 
+ *
  * Parameters
  *   pin: Arduino LED pin
  *   type: Possible values: LOOP (default)
  *                          COUNTDOWN
  *                          STOPWATCH
- * 
+ *
  * Returns
  *   void
  */
@@ -29,15 +31,15 @@ Timer::Timer(unsigned long period, byte type) {
 }
 
 /* check
- * 
+ *
  * Description
  *   Check timer status.
- * 
+ *
  *   timer.check()
- * 
+ *
  * Parameters
  *   period: Timer period
- * 
+ *
  * Returns
  *   bool: True if error, false if OK
  */
@@ -66,15 +68,15 @@ bool Timer::check() {
 }
 
 /* set
- * 
+ *
  * Description
  *  Set timer period.
- * 
+ *
  *  timer.set()
- * 
+ *
  * Parameters
  *  period: Timer period
- * 
+ *
  * Returns
  *  void
  */
@@ -84,15 +86,15 @@ void Timer::set(unsigned long period) {
 }
 
 /* reset
- * 
+ *
  * Description
  *   Reset timer.
- * 
+ *
  *   timer.reset()
- * 
+ *
  * Parameters
  *   none
- * 
+ *
  * Returns
  *   void
  */
@@ -102,15 +104,15 @@ void Timer::reset() {
 }
 
 /* read
- * 
+ *
  * Description
  *   Read defined time period.
- * 
+ *
  *   timer.read()
- * 
+ *
  * Parameters
  *   none
- * 
+ *
  * Returns
  *   unsigned long: defined time period
  */
@@ -119,15 +121,15 @@ unsigned long Timer::read() {
 }
 
 /* residual
- * 
+ *
  * Description
  *   Set timer period.
- * 
+ *
  *   timer.residual()
- * 
+ *
  * Parameters
  *   none
- * 
+ *
  * Returns
  *   unsigned long: residual time period
  */
@@ -137,15 +139,15 @@ unsigned long Timer::residual() {
 }
 
 /* enable
- * 
+ *
  * Description
  *   Enable timer.
- * 
+ *
  *   timer.enable()
- * 
+ *
  * Parameters
  *   none
- * 
+ *
  * Returns
  *   void
  */
@@ -154,15 +156,15 @@ void Timer::enable() {
 }
 
 /* disable
- * 
+ *
  * Description
  *   Disable timer.
- * 
+ *
  *   timer.disable()
- * 
+ *
  * Parameters
  *   none
- * 
+ *
  * Returns
  *   void
  */
@@ -171,15 +173,15 @@ void Timer::disable() {
 }
 
 /* human_time
- * 
+ *
  * Description
  *   Show nice output formatted time.
- * 
+ *
  *   human_time(unsigned long milliseconds)
- * 
+ *
  * Parameters
  *   unsigned long: milliseconds
- * 
+ *
  * Returns
  *   String: Formated time, like: "9 days, 15:14:03"
  */
