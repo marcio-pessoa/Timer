@@ -123,7 +123,7 @@ unsigned long Timer::read() {
 /* residual
  *
  * Description
- *   Set timer period.
+ *   Return residual time amount.
  *
  *   timer.residual()
  *
