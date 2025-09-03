@@ -1,6 +1,6 @@
 /* Timer.cpp - Real Time Library
  *
- * Copyright 2019-2020 Marcio Pessoa
+ * Copyright 2019-2024 Marcio Pessoa
  *
  */
 
@@ -23,7 +23,7 @@
  * Returns
  *   void
  */
-Timer::Timer(unsigned long period, byte type) {
+Timer::Timer(unsigned long period, Type type) {
   _period = period;
   _type = type;
   _counter = millis();
@@ -46,22 +46,22 @@ Timer::Timer(unsigned long period, byte type) {
 bool Timer::check() {
   switch (_type) {
     default:
-    case LOOP: {
+    case Type::LOOP: {
       if (millis() - _counter >= _period) {
-        _counter = millis();
+        _counter += _period;
         return true;
       }
       break;
     }
-    case COUNTDOWN: {
+    case Type::COUNTDOWN: {
       if (millis() - _counter >= _period) {
         _enable = false;
         return true;
       }
       break;
     }
-    case STOPWATCH: {
-      return (millis() - _counter);
+    case Type::STOPWATCH: {
+      return false;
     }
   }
   return false;
@@ -138,6 +138,23 @@ unsigned long Timer::residual() {
   else return 0;
 }
 
+/* elapsed
+ *
+ * Description
+ *   Return elapsed time amount.
+ *
+ *   timer.elapsed()
+ *
+ * Parameters
+ *   none
+ *
+ * Returns
+ *   unsigned long: elapsed time period
+ */
+unsigned long Timer::elapsed() {
+  return millis() - _counter;
+}
+
 /* enable
  *
  * Description
@@ -185,7 +202,7 @@ void Timer::disable() {
  * Returns
  *   String: Formated time, like: "9 days, 15:14:03"
  */
-String human_time(unsigned long milliseconds) {
+String Timer::human_time(unsigned long milliseconds) {
   String time = "";
   byte s = (milliseconds / 1000) % 60;     // Seconds
   byte m = (milliseconds / 60000) % 60;    // Minutes

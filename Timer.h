@@ -1,50 +1,9 @@
 /* Timer.h - Real Time Library
  *
- * Copyright 2019-2020 Marcio Pessoa
+ * Copyright 2019-2024 Marcio Pessoa
  *
  * Author: Márcio Pessoa <marcio.pessoa@gmail.com>
  * Contributors: none
- *
- * Methods
- *   Timer(unsigned long period, byte type = LOOP)
- *     Instantiates a Timer object with a set interval in milliseconds.
- *     Optionally can set Timer type:
- *       LOOP (default)
- *         Count to time limit and restart automaticaly when limit is reached
- *       COUNTDOWN
- *         Count to time limit and set OK when limit is reached.
- *         The counter must be restarted manually to continue.
- *       STOPWATCH
- *         Just a stopwatch, counts infinitely.
- *   bool check()
- *     Returns true if the interval has lapsed. Returns false if not.
- *   void set(unsigned long period)
- *     Changes the interval in milliseconds.
- *   void reset()
- *     Restarts/resets the Timer. Often a good idea if you change the interval.
- *   void enable()
- *     Enable Timer, by default it is enabled.
- *   void disable()
- *     Disble Timer.
- *
- * Change log
- * 2015-10-04
- *         * check
- *         Bug fix on COUNTDOWN timer. Now counter stop decreasing after
- *         reaches 0.
- *
- * 2015-09-27
- *         * residual
- *         Added residual method.
- *
- * 2014-11-16
- *         * Timer
- *         Changed (int period) to (unsigned long period).
- *         * set
- *         Changed (int period) to (unsigned long period).
- *
- * 2014-07-06
- *         Experimental version.
  */
 
 #ifndef Timer_h
@@ -52,28 +11,78 @@
 
 #include "Arduino.h"
 
-#define LOOP 0
-#define COUNTDOWN 1
-#define STOPWATCH 2
+enum class Type : byte {
+  LOOP,
+  COUNTDOWN,
+  STOPWATCH
+};
 
 class Timer
 {
   public:
-    Timer(unsigned long period = 0, byte type = LOOP);
+    /**
+     * @brief Construct a new Timer object
+     * @param period The timer period in milliseconds
+     * @param type The type of the timer (LOOP, COUNTDOWN, or STOPWATCH)
+     */
+    Timer(unsigned long period = 0, Type type = Type::LOOP);
+
+    /**
+     * @brief Set a new period for the timer
+     * @param period The new period in milliseconds
+     */
     void set(unsigned long period = 0);
+
+    /**
+     * @brief Read the configured period of the timer
+     * @return The period in milliseconds
+     */
     unsigned long read();
+
+    /**
+     * @brief Get the remaining time until the next event
+     * @return The residual time in milliseconds
+     */
     unsigned long residual();
+
+    /**
+     * @brief Get the elapsed time since the timer was started or reset
+     * @return The elapsed time in milliseconds
+     */
+    unsigned long elapsed();
+
+    /**
+     * @brief Reset the timer
+     */
     void reset();
+
+    /**
+     * @brief Enable the timer
+     */
     void enable();
+
+    /**
+     * @brief Disable the timer
+     */
     void disable();
+
+    /**
+     * @brief Check if the timer has reached its set period
+     * @return True if the period has elapsed, false otherwise
+     */
     bool check();
+
+    /**
+     * @brief Convert a duration in milliseconds to a human-readable string
+     * @param milliseconds The duration to convert
+     * @return A string representation of the time
+     */
+    static String human_time(unsigned long milliseconds);
   private:
     unsigned long _period;
-    byte _type;
+    Type _type;
     unsigned long _counter;
     bool _enable;
 };
-
-String human_time(unsigned long milliseconds);
 
 #endif
